@@ -10,12 +10,12 @@ class BreedDetailsArguments {
 
 class BreedDetails extends StatefulWidget {
   final Breed breed;
+
   const BreedDetails({Key? key, required this.breed}) : super(key: key);
   static const routeName = '/breedDetails';
 
   @override
   createState() => _BreedDetailsState();
-
 }
 
 class _BreedDetailsState extends State<BreedDetails> {
@@ -30,24 +30,36 @@ class _BreedDetailsState extends State<BreedDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Breed Details'),
-      ),
-      body: Center(
-        child: FutureBuilder<String>(
-          future: futureBreedImgUrl,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Image.network(snapshot.data!);
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-            return const CircularProgressIndicator();
-          },
+        appBar: AppBar(
+          title: const Text('Breed Details'),
         ),
-      )
-    );
+        body: Center(
+          child: FutureBuilder<String>(
+            future: futureBreedImgUrl,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var breed = widget.breed;
+                return Column(
+                  children: [
+                    Image.network(snapshot.data!),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: breed.subBreeds.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              title: Text(breed.subBreeds[index],),
+                              onTap: () {},
+                            );
+                          }),
+                    ),
+                  ],
+                );
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+              return const CircularProgressIndicator();
+            },
+          ),
+        ));
   }
-
 }
-
