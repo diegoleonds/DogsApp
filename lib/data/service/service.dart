@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import 'breed.dart';
+import '../model/breed.dart';
 
 class Service {
   static Future<List<Breed>> getBreeds() async {
@@ -18,15 +18,13 @@ class Service {
         breeds.add(
           Breed(
               name: key,
-              subBreeds: (value as List<dynamic>).map((breed) => breed as String).toList()
+              subBreeds: (value as List<dynamic>).map((subBreed) => subBreed as String).toList()
           )
         );
       });
       return breeds;
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load breeds');
     }
   }
 }
