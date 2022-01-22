@@ -38,6 +38,12 @@ class _BreedsListState extends State<BreedsList> {
                     return ListTile(
                       title: Text(breed.name),
                       onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BreedDetails(breed: breed),
+                          ),
+                        );
                         Navigator.pushNamed(
                             context,
                             BreedDetails.routeName,
