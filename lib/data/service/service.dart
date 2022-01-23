@@ -39,4 +39,16 @@ class Service {
       throw Exception('Failed to load breed img url');
     }
   }
+
+  static Future<String> getSubBreedImgUrl(String breed, String subBreed) async {
+    final response = await http
+        .get(Uri.parse('https://dog.ceo/api/breed/$breed/$subBreed/images/random'));
+
+    if (response.statusCode == 200) {
+      var map = jsonDecode(response.body);
+      return map['message'];
+    } else {
+      throw Exception('Failed to load breed img url');
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:dogs_app/data/service/service.dart';
 import 'package:dogs_app/data/model/breed.dart';
+import 'package:dogs_app/ui/route/subBreedDetails.dart';
 import 'package:flutter/material.dart';
 
 class BreedDetailsArguments {
@@ -29,29 +30,45 @@ class _BreedDetailsState extends State<BreedDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var breed = widget.breed;
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Breed Details'),
+          title: Text(breed.name),
         ),
         body: Center(
           child: FutureBuilder<String>(
             future: futureBreedImgUrl,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                var breed = widget.breed;
-                return Column(
+                return ListView(
                   children: [
-                    Image.network(snapshot.data!),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: breed.subBreeds.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(breed.subBreeds[index],),
-                              onTap: () {},
-                            );
-                          }),
+                    Image.network(
+                      snapshot.data!,
                     ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        itemCount: breed.subBreeds.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              breed.subBreeds[index],
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SubBreedDetails(
+                                        arguments: SubBreedDetailsArguments(
+                                            breed.subBreeds[index],
+                                            breed.name
+                                        )
+                                    )
+                                ),
+                              );
+                            },
+                          );
+                        }),
                   ],
                 );
               } else if (snapshot.hasError) {

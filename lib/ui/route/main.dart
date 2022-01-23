@@ -1,6 +1,7 @@
 import 'package:dogs_app/data/model/breed.dart';
 import 'package:dogs_app/ui/route/breedDetails.dart';
 import 'package:dogs_app/ui/route/breedsList.dart';
+import 'package:dogs_app/ui/route/subBreedDetails.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -35,6 +36,12 @@ class _MyAppState extends State<MyApp> {
             if (arguments is Breed) {
               builder = (BuildContext _) => BreedDetails(breed: arguments);
             }
+            break;
+          case SubBreedDetails.routeName:
+            if (arguments is SubBreedDetailsArguments) {
+              builder = (BuildContext _) => SubBreedDetails(arguments: arguments,);
+            }
+            break;
         }
         return MaterialPageRoute(
           builder: builder,

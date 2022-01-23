@@ -44,11 +44,6 @@ class _BreedsListState extends State<BreedsList> {
                             builder: (context) => BreedDetails(breed: breed),
                           ),
                         );
-                        Navigator.pushNamed(
-                            context,
-                            BreedDetails.routeName,
-                            arguments: BreedDetailsArguments(breed)
-                        );
                       },
                     );
                   });
